@@ -25,7 +25,10 @@ export async function POST(req: Request) {
 
     const pdfResponse = await fetch(PDF_SERVER_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'x-api-key': process.env.PDF_SERVER_API_KEY || '',
+      },
       body: JSON.stringify(body),
     });
 

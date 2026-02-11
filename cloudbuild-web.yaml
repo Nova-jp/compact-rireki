@@ -1,0 +1,5 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'asia-northeast1-docker.pkg.dev/kantan-rireki/kantan-rireki-repo/kantan-rireki-web', '-f', 'Dockerfile.web', '.']
+images:
+- 'asia-northeast1-docker.pkg.dev/kantan-rireki/kantan-rireki-repo/kantan-rireki-web'

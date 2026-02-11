@@ -1,0 +1,12 @@
+steps:
+  # PDF Server Build
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/kantan-rireki-repo/kantan-rireki-pdf', '-f', 'Dockerfile.pdf', '.']
+  
+  # Web Server Build
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/kantan-rireki-repo/kantan-rireki-web', '-f', 'Dockerfile.web', '.']
+
+images:
+  - 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/kantan-rireki-repo/kantan-rireki-pdf'
+  - 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/kantan-rireki-repo/kantan-rireki-web'

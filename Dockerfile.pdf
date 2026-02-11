@@ -1,12 +1,12 @@
 FROM node:20-slim
 
 # Install Chromium and necessary fonts for Japanese
-RUN apt-get update && apt-get install -y 
-    chromium 
-    fonts-ipafont-gothic 
-    fonts-ipafont-mincho 
-    ca-certificates 
-    --no-install-recommends 
+RUN apt-get update && apt-get install -y \
+    chromium \
+    fonts-ipafont-gothic \
+    fonts-ipafont-mincho \
+    ca-certificates \
+    --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app

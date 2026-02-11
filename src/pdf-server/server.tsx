@@ -13,6 +13,15 @@ const PORT = process.env.PDF_SERVER_PORT || 3001;
 
 app.post('/generate', async (req, res) => {
   try {
+    // Basic shared secret authentication
+    const apiKey = req.headers['x-api-key'];
+    const expectedKey = process.env.PDF_SERVER_API_KEY;
+    
+    if (expectedKey && apiKey !== expectedKey) {
+      console.warn(`[PDF-SERVER] Unauthorized access attempt from ${req.ip}`);
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
     const { name, cvData, personalInfo, data } = req.body;
     console.log(`[PDF-SERVER] Generating PDF for: ${name}`);
 
