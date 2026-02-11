@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:pdf": "tsx watch src/pdf-server/server.tsx",
+    "dev:all": "npm run dev & npm run dev:pdf",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"
@@ -11,6 +13,7 @@
   "dependencies": {
     "@types/uuid": "^10.0.0",
     "clsx": "^2.1.1",
+    "express": "^5.2.1",
     "handlebars": "^4.7.8",
     "lucide-react": "^0.563.0",
     "next": "16.1.6",
@@ -27,12 +30,14 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/express": "^5.0.6",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "tailwindcss": "^4",
+    "tsx": "^4.21.0",
     "typescript": "^5"
   }
 }

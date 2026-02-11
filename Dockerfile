@@ -3,8 +3,6 @@ FROM node:20-slim AS base
 # Install dependencies only when needed
 FROM base AS deps
 WORKDIR /app
-
-# Install dependencies based on the preferred package manager
 COPY package.json package-lock.json* ./
 RUN npm ci
 
@@ -13,10 +11,7 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-
-# Next.js telemetry disable
 ENV NEXT_TELEMETRY_DISABLED 1
-
 RUN npm run build
 
 # Production image, copy all the files and run next
@@ -26,8 +21,11 @@ WORKDIR /app
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
 
-# Install dependencies for Puppeteer
+# Install Chromium and necessary fonts for Japanese
 RUN apt-get update && apt-get install -y \
+    chromium \
+    fonts-ipafont-gothic \
+    fonts-ipafont-mincho \
     ca-certificates \
     fonts-liberation \
     libasound2 \
@@ -67,32 +65,20 @@ RUN apt-get update && apt-get install -y \
     --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
+# Set Puppeteer to use the system Chromium
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# Copy standalone build
 COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-# Puppeteer needs the cache located in the user's home directory usually
-# In standalone mode, we rely on the installed puppeteer in node_modules (copied by standalone)
-# to download browser if needed, or we assume it was copied.
-# Since we are using 'npm ci' in deps, the binary is in /app/node_modules/puppeteer/.local-chromium (or .cache)
-# But standalone output copies necessary node_modules.
-# IMPORTANT: Puppeteer v19+ stores cache in ~/.cache/puppeteer.
-# We need to make sure the binary is available.
-# A simpler approach for production is to tell Puppeteer to download if missing, or copy the cache.
-# Let's try copying the cache from deps stage if it exists, or just relying on the fact that 
-# serverExternalPackages might copy it.
-# Actually, the safest way in Docker is to point cache to a local dir.
-
-ENV PUPPETEER_CACHE_DIR=/app/.cache/puppeteer
-
 USER nextjs
 
 EXPOSE 3000
-
 ENV PORT 3000
 ENV HOSTNAME "0.0.0.0"
 

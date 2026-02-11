@@ -1,34 +1,41 @@
-import { NextRequest, NextResponse } from 'next/server';
-import Stripe from 'stripe';
+import { NextResponse } from 'next/server';
+import { stripe } from '@/lib/stripe';
+import { APP_CONFIG } from '@/lib/constants';
 
-export async function POST(req: NextRequest) {
+export async function POST(req: Request) {
   try {
     const { email, type = 'resume' } = await req.json();
-    const secretKey = process.env.STRIPE_SECRET_KEY;
 
-    if (!secretKey) {
-      // For build time or missing key
-      return NextResponse.json({ error: 'STRIPE_SECRET_KEY is not defined' }, { status: 500 });
+    // Determine origin safely
+    let origin = process.env.BASE_URL;
+
+    if (!origin) {
+      const host = req.headers.get('host');
+      const forwardedProto = req.headers.get('x-forwarded-proto');
+      const protocol = forwardedProto || (host?.includes('localhost') ? 'http' : 'https');
+      origin = `${protocol}://${host}`;
     }
 
-    const stripe = new Stripe(secretKey);
-    const { origin } = new URL(req.url);
+    // Remove trailing slash if exists
+    origin = origin.replace(/\/$/, '');
 
-    // Basic email validation
+    console.log('--- Checkout Request (App Router) ---');
+    console.log('TYPE:', type);
+    console.log('FINAL ORIGIN:', origin);
+
     const isValidEmail = email && typeof email === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-    // Create Stripe Checkout Session
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
         {
           price_data: {
-            currency: 'jpy',
+            currency: APP_CONFIG.PAYMENT.CURRENCY,
             product_data: {
               name: type === 'cv' ? '職務経歴書PDFダウンロード' : '履歴書PDFダウンロード',
               description: '高品質なPDFの生成・ダウンロード',
             },
-            unit_amount: 500,
+            unit_amount: APP_CONFIG.PAYMENT.AMOUNT,
           },
           quantity: 1,
         },
@@ -42,6 +49,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ url: session.url });
   } catch (error: any) {
     console.error('Stripe Session Error:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json(
+      { error: error.message || 'Failed to create checkout session' },
+      { status: 500 }
+    );
   }
 }

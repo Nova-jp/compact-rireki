@@ -13,6 +13,7 @@ import { ResumePreview } from '@/components/preview/ResumePreview';
 import { toast } from 'react-hot-toast';
 import { User, GraduationCap, Briefcase, Award, FileText, ChevronLeft, ChevronRight, CreditCard, CheckCircle2, Trash2 } from 'lucide-react';
 import clsx from 'clsx';
+import { APP_CONFIG } from '@/lib/constants';
 
 type Tab = 'personal' | 'history' | 'licenses' | 'pr';
 
@@ -23,7 +24,7 @@ function ResumePageContent() {
   const { data, hasHydrated } = useResumeStore();
   const searchParams = useSearchParams();
   const router = useRouter();
-  const sessionId = searchParams.get('session_id');
+  const sessionId = searchParams?.get('session_id');
 
   useEffect(() => {
     if (sessionId && !isPaid && hasHydrated) {
@@ -39,11 +40,29 @@ function ResumePageContent() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: data.personalInfo.email }) 
       });
-      const { url } = await response.json();
-      if (url) window.location.href = url;
-    } catch (error) {
-      console.error(error);
-      toast.error('決済の準備に失敗しました。');
+      
+      let responseData;
+      try {
+        responseData = await response.json();
+      } catch (e) {
+        throw new Error(`サーバーエラーが発生しました (${response.status})`);
+      }
+      
+      if (!response.ok) {
+        console.error('Checkout API Error:', responseData);
+        throw new Error(responseData.error || `APIエラー (${response.status})`);
+      }
+
+      const { url } = responseData;
+      console.log('Checkout URL received:', url);
+      if (url) {
+        window.location.href = url;
+      } else {
+        throw new Error('決済ページへのURLが見つかりませんでした。');
+      }
+    } catch (error: any) {
+      console.error('handleCheckout error:', error);
+      toast.error(`決済の準備に失敗しました: ${error.message}`);
       setIsProcessing(false);
     }
   };
@@ -130,7 +149,7 @@ function ResumePageContent() {
                 <CreditCard className="w-4 h-4" />
               )}
               {isProcessing ? '処理中...' : '支払ってダウンロード'}
-              {!isProcessing && <span className="bg-slate-700 px-2 py-0.5 rounded-full text-[10px] tracking-wide ml-1">¥500</span>}
+              {!isProcessing && <span className="bg-slate-700 px-2 py-0.5 rounded-full text-[10px] tracking-wide ml-1">¥{APP_CONFIG.PAYMENT.AMOUNT.toLocaleString()}</span>}
             </button>
           )}
         </div>
