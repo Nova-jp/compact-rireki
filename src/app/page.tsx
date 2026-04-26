@@ -172,6 +172,7 @@ export default function Home() {
              <div className="flex gap-6 text-sm font-medium text-slate-500">
                <Link href="/resume" className="hover:text-blue-600 transition-colors">履歴書</Link>
                <Link href="/cv" className="hover:text-blue-600 transition-colors">職務経歴書</Link>
+               <Link href="/contact" className="hover:text-blue-600 transition-colors">ご意見・ご要望</Link>
              </div>
              <div className="flex items-center gap-4 text-xs text-slate-400">
                <Link href="/legal" className="hover:text-slate-600 transition-colors">特定商取引法に基づく表記</Link>
