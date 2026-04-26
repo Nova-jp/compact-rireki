@@ -48,29 +48,16 @@ export function CVPersonalInfoForm() {
         <h3 className="text-base font-bold text-slate-800 flex items-center gap-2">
           <User className="w-4 h-4 text-blue-500" />氏名
         </h3>
-        <div className="space-y-5">
-          <div>
-            <label className={labelClass}>ふりがな</label>
-            <input
-              type="text"
-              name="kana"
-              value={info.kana}
-              onChange={handleNameChange}
-              placeholder="やまだ たろう"
-              className={inputClass}
-            />
-          </div>
-          <div>
-            <label className={labelClass}>氏名</label>
-            <input
-              type="text"
-              name="name"
-              value={info.name}
-              onChange={handleNameChange}
-              placeholder="山田 太郎"
-              className={inputClass}
-            />
-          </div>
+        <div>
+          <label className={labelClass}>氏名</label>
+          <input
+            type="text"
+            name="name"
+            value={info.name}
+            onChange={handleNameChange}
+            placeholder="山田 太郎"
+            className={inputClass}
+          />
         </div>
       </div>
     </div>

@@ -4,6 +4,18 @@ import { useResumeStore } from '@/lib/store';
 import { Plus, Trash2 } from 'lucide-react';
 import { v4 as uuidv4 } from 'uuid';
 
+function toMonthInput(val: string): string {
+  const m = val.match(/(\d+)年(\d+)月/);
+  if (!m) return '';
+  return `${m[1]}-${m[2].padStart(2, '0')}`;
+}
+
+function fromMonthInput(val: string): string {
+  if (!val) return '';
+  const [y, m] = val.split('-');
+  return `${y}年${parseInt(m)}月`;
+}
+
 export function CVLicensesForm() {
   const { cvData, updateCVLicenses } = useResumeStore();
   const licenses = cvData.licenses || [];
@@ -40,12 +52,11 @@ export function CVLicensesForm() {
         <div className="space-y-4 lg:space-y-3">
           {licenses.map((entry) => (
             <div key={entry.id} className="relative group bg-slate-50/50 sm:bg-transparent p-4 sm:p-0 rounded-lg border border-slate-100 sm:border-transparent flex flex-col sm:flex-row gap-3 items-start">
-              <div className="w-full sm:w-32 flex-shrink-0">
+              <div className="w-full sm:w-40 flex-shrink-0">
                 <input
-                  type="text"
-                  placeholder="例: 2023年5月"
-                  value={entry.date}
-                  onChange={(e) => updateEntry(entry.id, 'date', e.target.value)}
+                  type="month"
+                  value={toMonthInput(entry.date)}
+                  onChange={(e) => updateEntry(entry.id, 'date', fromMonthInput(e.target.value))}
                   className={`${inputClass} w-full h-11 sm:h-auto`}
                 />
               </div>

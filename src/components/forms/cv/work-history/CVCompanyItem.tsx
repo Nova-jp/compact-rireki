@@ -5,6 +5,18 @@ import { CVWorkHistoryEntry } from '@/types/resume';
 import { CVProjectItem } from './CVProjectItem';
 import clsx from 'clsx';
 
+function toMonthInput(val: string): string {
+  const m = val.match(/(\d+)年(\d+)月/);
+  if (!m) return '';
+  return `${m[1]}-${m[2].padStart(2, '0')}`;
+}
+
+function fromMonthInput(val: string): string {
+  if (!val) return '';
+  const [y, m] = val.split('-');
+  return `${y}年${parseInt(m)}月`;
+}
+
 interface CVCompanyItemProps {
   entry: CVWorkHistoryEntry;
   index: number;
@@ -78,22 +90,35 @@ export function CVCompanyItem({
             <div className="col-span-1">
               <label className={labelClass}>期間 (開始)</label>
               <input
-                type="text"
-                placeholder="2020年4月"
-                value={entry.periodStart}
-                onChange={(e) => onUpdate('periodStart', e.target.value)}
+                type="month"
+                value={toMonthInput(entry.periodStart)}
+                onChange={(e) => onUpdate('periodStart', fromMonthInput(e.target.value))}
                 className={`${inputClass} w-full h-11 lg:h-auto`}
               />
             </div>
             <div className="col-span-1">
               <label className={labelClass}>期間 (終了)</label>
-              <input
-                type="text"
-                placeholder="現在 / 2023年3月"
-                value={entry.periodEnd}
-                onChange={(e) => onUpdate('periodEnd', e.target.value)}
-                className={`${inputClass} w-full h-11 lg:h-auto`}
-              />
+              {entry.periodEnd === '現在' ? (
+                <div className={`${inputClass} w-full h-11 lg:h-auto flex items-center bg-slate-50 text-slate-500`}>
+                  現在も在籍中
+                </div>
+              ) : (
+                <input
+                  type="month"
+                  value={toMonthInput(entry.periodEnd)}
+                  onChange={(e) => onUpdate('periodEnd', fromMonthInput(e.target.value))}
+                  className={`${inputClass} w-full h-11 lg:h-auto`}
+                />
+              )}
+              <label className="flex items-center gap-2 mt-2 cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  checked={entry.periodEnd === '現在'}
+                  onChange={(e) => onUpdate('periodEnd', e.target.checked ? '現在' : '')}
+                  className="w-4 h-4 rounded accent-blue-600"
+                />
+                <span className="text-xs text-slate-500">現在も在籍中</span>
+              </label>
             </div>
             <div className="sm:col-span-2">
               <label className={labelClass}>事業内容</label>

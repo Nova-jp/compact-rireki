@@ -81,26 +81,18 @@ export function CVWorkHistoryForm() {
   return (
     <div className="space-y-6 mt-8">
       <div className="bg-white p-5 lg:p-6 rounded-xl border border-slate-200 shadow-sm">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-          <div>
-            <h3 className="text-lg font-bold text-slate-800">職務経歴詳細</h3>
-            <p className="text-xs text-slate-500 mt-1">
-              会社ごとの経歴と、具体的なプロジェクト・業務内容を記入します。
-            </p>
-          </div>
-          <button
-            onClick={addEntry}
-            className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 bg-blue-600 text-white rounded-full text-sm font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-100 active:scale-95"
-          >
-            <Plus className="w-4 h-4" /> 職歴を追加
-          </button>
+        <div className="mb-6">
+          <h3 className="text-lg font-bold text-slate-800">職務経歴詳細</h3>
+          <p className="text-xs text-slate-500 mt-1">
+            会社ごとの経歴と、具体的なプロジェクト・業務内容を記入します。
+          </p>
         </div>
 
         <div className="space-y-6 lg:space-y-8">
           {history.length === 0 && (
             <div className="text-center py-16 lg:py-24 border-2 border-dashed border-slate-100 rounded-2xl bg-slate-50/30">
               <Briefcase className="w-12 h-12 text-slate-200 mx-auto mb-4" />
-              <p className="text-slate-400 text-sm font-medium">職歴が登録されていません。<br className="sm:hidden"/>「職歴を追加」から入力を開始してください。</p>
+              <p className="text-slate-400 text-sm font-medium">職歴が登録されていません。</p>
             </div>
           )}
 
@@ -118,6 +110,13 @@ export function CVWorkHistoryForm() {
               onRemoveProject={(projectId) => removeProject(entry.id, projectId)}
             />
           ))}
+
+          <button
+            onClick={addEntry}
+            className="w-full py-4 flex items-center justify-center gap-2 border-2 border-dashed border-slate-200 rounded-xl text-sm font-bold text-slate-500 hover:text-blue-600 hover:border-blue-400 hover:bg-blue-50 transition-all active:scale-[0.98]"
+          >
+            <Plus className="w-4 h-4" /> 職歴を追加
+          </button>
         </div>
       </div>
     </div>
