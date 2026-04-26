@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useResumeStore } from '@/lib/store';
-import { PersonalInfoForm } from '@/components/forms/PersonalInfoForm';
+import { CVPersonalInfoForm } from '@/components/forms/cv/CVPersonalInfoForm';
 import { CVSummaryForm } from '@/components/forms/cv/CVSummaryForm';
 import { CVWorkHistoryForm } from '@/components/forms/cv/CVWorkHistoryForm';
 import { CVSkillsForm } from '@/components/forms/cv/CVSkillsForm';
@@ -198,7 +198,7 @@ export default function CVClient() {
 
           <div className="flex-1 overflow-y-auto">
             <div className="p-4 lg:p-8 pb-32 max-w-xl mx-auto space-y-6 lg:space-y-8">
-              {activeTab === 'personal' && <PersonalInfoForm hidePhoto={true} />}
+              {activeTab === 'personal' && <CVPersonalInfoForm />}
               {activeTab === 'summary' && <CVSummaryForm />}
               {activeTab === 'work-history' && <CVWorkHistoryForm />}
               {activeTab === 'licenses' && <CVLicensesForm />}
