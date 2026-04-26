@@ -129,7 +129,7 @@ export default function ResumeClient() {
         
         <div className="flex items-center gap-2 lg:gap-4">
           <button 
-            onClick={() => { if(confirm('入力したデータをすべて消去しますか？')) { localStorage.clear(); window.location.reload(); } }}
+            onClick={() => { if(confirm('入力したデータをすべて消去しますか？')) { localStorage.removeItem('resume-storage'); window.location.reload(); } }}
             className="p-2 text-slate-400 hover:text-red-500 transition-colors"
             title="データを消去"
           >

@@ -6,7 +6,7 @@ REGION="asia-northeast1"
 REPO_NAME="kantan-rireki-repo"
 WEB_SERVICE="kantan-rireki-web"
 PDF_SERVICE="kantan-rireki-pdf"
-PDF_API_KEY="kantan-rireki-secret-key-2025"
+PDF_API_KEY="${PDF_SERVER_API_KEY:?ERROR: PDF_SERVER_API_KEY environment variable is not set}"
 
 # 画像のフルパスを定義
 PDF_IMAGE="asia-northeast1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/$PDF_SERVICE"
