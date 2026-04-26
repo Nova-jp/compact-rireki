@@ -36,21 +36,21 @@ export function CVCompanyItem({
       {/* Header */}
       <div 
         className={clsx(
-          "px-5 py-4 flex items-center justify-between cursor-pointer transition-colors",
+          "px-4 lg:px-5 py-3 lg:py-4 flex items-center justify-between cursor-pointer transition-colors",
           isExpanded ? "bg-slate-50 border-b border-slate-200" : "hover:bg-slate-50"
         )}
         onClick={onToggle}
       >
-        <div className="flex items-center gap-4">
-          <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 font-bold text-xs">
+        <div className="flex items-center gap-3 lg:gap-4 flex-1 min-w-0">
+          <div className="w-7 h-7 lg:w-8 lg:h-8 rounded-full bg-slate-100 flex-shrink-0 flex items-center justify-center text-slate-500 font-bold text-[10px] lg:text-xs">
             {index + 1}
           </div>
-          <div>
-            <h4 className="font-bold text-slate-800">{entry.company || '名称未設定の会社'}</h4>
-            <p className="text-xs text-slate-500">{entry.periodStart || '----'} 〜 {entry.periodEnd || '----'}</p>
+          <div className="truncate">
+            <h4 className="font-bold text-slate-800 text-sm lg:text-base truncate">{entry.company || '名称未設定の会社'}</h4>
+            <p className="text-[10px] lg:text-xs text-slate-500">{entry.periodStart || '----'} 〜 {entry.periodEnd || '----'}</p>
           </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 lg:gap-2 ml-2">
           <button
             onClick={(e) => { e.stopPropagation(); onRemove(); }}
             className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
@@ -63,94 +63,94 @@ export function CVCompanyItem({
 
       {/* Content */}
       {isExpanded && (
-        <div className="p-6 space-y-6 bg-white">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="col-span-2">
+        <div className="p-4 lg:p-6 space-y-6 bg-white">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-5">
+            <div className="sm:col-span-2">
               <label className={labelClass}>会社名</label>
               <input
                 type="text"
                 placeholder="株式会社〇〇"
                 value={entry.company}
                 onChange={(e) => onUpdate('company', e.target.value)}
-                className={`${inputClass} w-full font-bold`}
+                className={`${inputClass} w-full font-bold h-11 lg:h-auto`}
               />
             </div>
-            <div>
+            <div className="col-span-1">
               <label className={labelClass}>期間 (開始)</label>
               <input
                 type="text"
                 placeholder="2020年4月"
                 value={entry.periodStart}
                 onChange={(e) => onUpdate('periodStart', e.target.value)}
-                className={`${inputClass} w-full`}
+                className={`${inputClass} w-full h-11 lg:h-auto`}
               />
             </div>
-            <div>
+            <div className="col-span-1">
               <label className={labelClass}>期間 (終了)</label>
               <input
                 type="text"
                 placeholder="現在 / 2023年3月"
                 value={entry.periodEnd}
                 onChange={(e) => onUpdate('periodEnd', e.target.value)}
-                className={`${inputClass} w-full`}
+                className={`${inputClass} w-full h-11 lg:h-auto`}
               />
             </div>
-            <div className="col-span-2">
+            <div className="sm:col-span-2">
               <label className={labelClass}>事業内容</label>
               <input
                 type="text"
                 placeholder="ITソリューションの提供、システム受託開発"
                 value={entry.businessContent || ''}
                 onChange={(e) => onUpdate('businessContent', e.target.value)}
-                className={`${inputClass} w-full`}
+                className={`${inputClass} w-full h-11 lg:h-auto`}
               />
             </div>
-            <div>
+            <div className="col-span-1">
               <label className={labelClass}>資本金</label>
               <input
                 type="text"
                 placeholder="1,000万円"
                 value={entry.capital || ''}
                 onChange={(e) => onUpdate('capital', e.target.value)}
-                className={`${inputClass} w-full`}
+                className={`${inputClass} w-full h-11 lg:h-auto`}
               />
             </div>
-            <div>
+            <div className="col-span-1">
               <label className={labelClass}>売上高</label>
               <input
                 type="text"
                 placeholder="50億円"
                 value={entry.revenue || ''}
                 onChange={(e) => onUpdate('revenue', e.target.value)}
-                className={`${inputClass} w-full`}
+                className={`${inputClass} w-full h-11 lg:h-auto`}
               />
             </div>
-            <div>
+            <div className="col-span-1">
               <label className={labelClass}>従業員数</label>
               <input
                 type="text"
                 placeholder="100名"
                 value={entry.employees || ''}
                 onChange={(e) => onUpdate('employees', e.target.value)}
-                className={`${inputClass} w-full`}
+                className={`${inputClass} w-full h-11 lg:h-auto`}
               />
             </div>
-            <div>
+            <div className="col-span-1">
               <label className={labelClass}>役職</label>
               <input
                 type="text"
                 placeholder="プロジェクトマネージャー"
                 value={entry.position}
                 onChange={(e) => onUpdate('position', e.target.value)}
-                className={`${inputClass} w-full`}
+                className={`${inputClass} w-full h-11 lg:h-auto`}
               />
             </div>
-            <div>
+            <div className="sm:col-span-2">
               <label className={labelClass}>雇用形態</label>
               <select
                 value={entry.employmentType}
                 onChange={(e) => onUpdate('employmentType', e.target.value)}
-                className={`${inputClass} w-full`}
+                className={`${inputClass} w-full h-11 lg:h-auto`}
               >
                 <option value="正社員">正社員</option>
                 <option value="契約社員">契約社員</option>
@@ -162,20 +162,20 @@ export function CVCompanyItem({
           </div>
 
           <div className="mt-8 pt-6 border-t border-slate-100">
-            <div className="flex justify-between items-center mb-4">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
               <h5 className="text-sm font-bold text-slate-700 flex items-center gap-2">
                 <div className="w-1.5 h-4 bg-blue-500 rounded-full" />
                 業務詳細・プロジェクト
               </h5>
               <button
                 onClick={onAddProject}
-                className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1"
+                className="w-full sm:w-auto py-2.5 sm:py-0 px-4 sm:px-0 border sm:border-0 border-blue-200 rounded-lg bg-blue-50 sm:bg-transparent text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center justify-center gap-1 transition-colors"
               >
                 <Plus className="w-3 h-3" /> プロジェクトを追加
               </button>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-6">
               {entry.projects.map((project) => (
                 <CVProjectItem
                   key={project.id}

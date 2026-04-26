@@ -80,8 +80,8 @@ export function CVWorkHistoryForm() {
 
   return (
     <div className="space-y-6 mt-8">
-      <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-        <div className="flex justify-between items-center mb-6">
+      <div className="bg-white p-5 lg:p-6 rounded-xl border border-slate-200 shadow-sm">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
           <div>
             <h3 className="text-lg font-bold text-slate-800">職務経歴詳細</h3>
             <p className="text-xs text-slate-500 mt-1">
@@ -90,17 +90,17 @@ export function CVWorkHistoryForm() {
           </div>
           <button
             onClick={addEntry}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-bold hover:bg-blue-700 transition-all shadow-md shadow-blue-100 active:scale-95"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 bg-blue-600 text-white rounded-full text-sm font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-100 active:scale-95"
           >
             <Plus className="w-4 h-4" /> 職歴を追加
           </button>
         </div>
 
-        <div className="space-y-8">
+        <div className="space-y-6 lg:space-y-8">
           {history.length === 0 && (
-            <div className="text-center py-12 border-2 border-dashed border-slate-100 rounded-xl">
-              <Briefcase className="w-12 h-12 text-slate-200 mx-auto mb-3" />
-              <p className="text-slate-400 text-sm">職歴が登録されていません。「職歴を追加」ボタンから入力を開始してください。</p>
+            <div className="text-center py-16 lg:py-24 border-2 border-dashed border-slate-100 rounded-2xl bg-slate-50/30">
+              <Briefcase className="w-12 h-12 text-slate-200 mx-auto mb-4" />
+              <p className="text-slate-400 text-sm font-medium">職歴が登録されていません。<br className="sm:hidden"/>「職歴を追加」から入力を開始してください。</p>
             </div>
           )}
 

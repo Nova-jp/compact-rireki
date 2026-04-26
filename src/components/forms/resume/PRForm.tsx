@@ -15,7 +15,7 @@ export function PRForm() {
   const sectionClass = "bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-6";
 
   return (
-    <div className="space-y-8 pb-20">
+    <div className="space-y-6 lg:space-y-8 pb-20">
       <div className={sectionClass}>
         <div>
           <label className={labelClass}>志望の動機、自己PRなど</label>
@@ -24,7 +24,7 @@ export function PRForm() {
             value={data.motivation}
             onChange={handleChange}
             placeholder="これまでの経験をどのように貴社で活かせるか、応募の動機を記入してください。"
-            className={`${inputClass} min-h-[200px] resize-y`}
+            className={`${inputClass} min-h-[250px] lg:min-h-[200px] resize-none`}
           />
         </div>
       </div>
@@ -32,7 +32,7 @@ export function PRForm() {
       <div className={sectionClass}>
         <h3 className="text-lg font-bold text-slate-800 border-b border-slate-100 pb-3 mb-4">その他</h3>
         
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:gap-6">
           <div>
             <label className={labelClass}>通勤時間</label>
             <input
@@ -53,21 +53,21 @@ export function PRForm() {
                 value={data.dependents}
                 onChange={handleChange}
                 placeholder="0"
-                className={`${inputClass} text-center`}
+                className={`${inputClass} text-center h-11 lg:h-auto`}
               />
               <span className="text-slate-500 text-sm">人</span>
             </div>
           </div>
           <div>
             <label className={labelClass}>配偶者</label>
-            <select name="spouse" value={data.spouse} onChange={handleChange} className={inputClass}>
+            <select name="spouse" value={data.spouse} onChange={handleChange} className={`${inputClass} h-11 lg:h-auto`}>
               <option value="無">無</option>
               <option value="有">有</option>
             </select>
           </div>
           <div>
             <label className={labelClass}>配偶者の扶養義務</label>
-            <select name="spouseSupport" value={data.spouseSupport} onChange={handleChange} className={inputClass}>
+            <select name="spouseSupport" value={data.spouseSupport} onChange={handleChange} className={`${inputClass} h-11 lg:h-auto`}>
               <option value="無">無</option>
               <option value="有">有</option>
             </select>
@@ -86,7 +86,7 @@ export function PRForm() {
             value={data.requests}
             onChange={handleChange}
             placeholder="勤務地：東京都内を希望します。&#10;勤務時間：貴社規定に従います。"
-            className={`${inputClass} min-h-[120px] resize-y`}
+            className={`${inputClass} min-h-[150px] lg:min-h-[120px] resize-none`}
           />
         </div>
       </div>

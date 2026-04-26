@@ -4,24 +4,24 @@ import { useResumeStore } from '@/lib/store';
 import { Plus, Trash2 } from 'lucide-react';
 import { v4 as uuidv4 } from 'uuid';
 
-export function CVLicensesForm() {
-  const { cvData, updateCVLicenses } = useResumeStore();
-  const licenses = cvData.licenses || [];
+export function WorkHistoryForm() {
+  const { data, updateExperience } = useResumeStore();
+  const experience = data.experience;
 
   const addEntry = () => {
-    updateCVLicenses([
-      ...licenses,
-      { id: uuidv4(), date: '', name: '' }
+    updateExperience([
+      ...experience,
+      { id: uuidv4(), year: '', month: '', content: '' }
     ]);
   };
 
   const removeEntry = (id: string) => {
-    updateCVLicenses(licenses.filter(e => e.id !== id));
+    updateExperience(experience.filter(e => e.id !== id));
   };
 
-  const updateEntry = (id: string, field: 'date' | 'name', value: string) => {
-    updateCVLicenses(
-      licenses.map(e => e.id === id ? { ...e, [field]: value } : e)
+  const updateEntry = (id: string, field: 'year' | 'month' | 'content', value: string) => {
+    updateExperience(
+      experience.map(e => e.id === id ? { ...e, [field]: value } : e)
     );
   };
 
@@ -31,30 +31,41 @@ export function CVLicensesForm() {
     <div className="space-y-6 mt-8">
       <div className="bg-white p-5 lg:p-6 rounded-xl border border-slate-200 shadow-sm">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-6">
-          <h3 className="text-lg font-bold text-slate-800">保有資格・免許</h3>
+          <h3 className="text-lg font-bold text-slate-800">職歴</h3>
           <p className="text-xs text-slate-500 bg-slate-50 px-2 py-1 rounded">
-            業務に関連する資格を中心に、取得年月とともに記入します。
+            古い順に記入します。最後に「以上」と記入するのが一般的です。
           </p>
         </div>
 
         <div className="space-y-4 lg:space-y-3">
-          {licenses.map((entry) => (
+          {experience.map((entry) => (
             <div key={entry.id} className="relative group bg-slate-50/50 sm:bg-transparent p-4 sm:p-0 rounded-lg border border-slate-100 sm:border-transparent flex flex-col sm:flex-row gap-3 items-start">
-              <div className="w-full sm:w-32 flex-shrink-0">
-                <input
-                  type="text"
-                  placeholder="例: 2023年5月"
-                  value={entry.date}
-                  onChange={(e) => updateEntry(entry.id, 'date', e.target.value)}
-                  className={`${inputClass} w-full h-11 sm:h-auto`}
-                />
+              <div className="flex gap-2 w-full sm:w-auto">
+                <div className="w-20 flex-shrink-0">
+                  <input
+                    type="text"
+                    placeholder="年"
+                    value={entry.year}
+                    onChange={(e) => updateEntry(entry.id, 'year', e.target.value)}
+                    className={`${inputClass} w-full text-center h-11 sm:h-auto`}
+                  />
+                </div>
+                <div className="w-16 flex-shrink-0">
+                  <input
+                    type="text"
+                    placeholder="月"
+                    value={entry.month}
+                    onChange={(e) => updateEntry(entry.id, 'month', e.target.value)}
+                    className={`${inputClass} w-full text-center h-11 sm:h-auto`}
+                  />
+                </div>
               </div>
               <div className="flex-1 w-full relative">
                 <input
                   type="text"
-                  placeholder="応用情報技術者試験 合格"
-                  value={entry.name}
-                  onChange={(e) => updateEntry(entry.id, 'name', e.target.value)}
+                  placeholder="会社名、部署、役職、退職理由など"
+                  value={entry.content}
+                  onChange={(e) => updateEntry(entry.id, 'content', e.target.value)}
                   className={`${inputClass} w-full h-11 sm:h-auto pr-10 sm:pr-3`}
                 />
                 <button
@@ -74,19 +85,13 @@ export function CVLicensesForm() {
               </button>
             </div>
           ))}
-          
-          {licenses.length === 0 && (
-            <p className="text-center text-sm text-slate-400 py-4 lg:py-8 border border-dashed border-slate-100 rounded-lg">
-              資格情報は登録されていません。
-            </p>
-          )}
         </div>
 
         <button
           onClick={addEntry}
           className="mt-6 w-full py-3 flex items-center justify-center gap-2 border border-dashed border-slate-300 rounded-lg text-sm font-bold text-slate-500 hover:text-blue-600 hover:border-blue-400 hover:bg-blue-50 transition-all active:scale-[0.98]"
         >
-          <Plus className="w-4 h-4" /> 資格を追加
+          <Plus className="w-4 h-4" /> 職歴を追加
         </button>
       </div>
     </div>

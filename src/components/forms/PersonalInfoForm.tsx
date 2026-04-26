@@ -156,7 +156,7 @@ export function PersonalInfoForm({ hidePhoto = false }: PersonalInfoFormProps) {
       <div className={sectionClass}>
         <h3 className="text-lg font-bold text-slate-800 border-b border-slate-100 pb-3 mb-4 flex items-center gap-2">現住所・連絡先</h3>
         <div className="grid grid-cols-12 gap-5">
-          <div className="col-span-4">
+          <div className="col-span-12 sm:col-span-4">
             <label className={labelClass}>郵便番号</label>
             <input type="text" name="postalCode" value={info.postalCode} onChange={handleChange} placeholder="123-4567" className={inputClass} />
           </div>
@@ -193,7 +193,7 @@ export function PersonalInfoForm({ hidePhoto = false }: PersonalInfoFormProps) {
         </button>
         {showAltContact && (
           <div className="grid grid-cols-12 gap-5 pt-4 animate-in fade-in duration-300 border-t border-slate-50 mt-2">
-             <div className="col-span-4">
+             <div className="col-span-12 sm:col-span-4">
               <label className={labelClass}>郵便番号</label>
               <input type="text" name="altPostalCode" value={info.altPostalCode} onChange={handleChange} placeholder="123-4567" className={inputClass} />
             </div>
