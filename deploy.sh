@@ -17,6 +17,7 @@ echo "🚀 デプロイを開始します: $PROJECT_ID"
 # 1. PDFサーバーのビルド
 echo "📦 PDFサーバーをビルド中..."
 gcloud builds submit . \
+    --project "$PROJECT_ID" \
     --config=<(cat <<EOF
 steps:
 - name: 'gcr.io/cloud-builders/docker'
@@ -29,6 +30,7 @@ EOF
 # 2. Webサーバーのビルド
 echo "📦 Webサーバーをビルド中..."
 gcloud builds submit . \
+    --project "$PROJECT_ID" \
     --config=<(cat <<EOF
 steps:
 - name: 'gcr.io/cloud-builders/docker'
