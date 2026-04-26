@@ -24,33 +24,36 @@ export default function LegalPage() {
           <ArrowLeft className="w-4 h-4" />
           トップページに戻る
         </Link>
-        
+
         <h1 className="text-2xl lg:text-3xl font-bold mb-10 border-b border-slate-200 pb-4">特定商取引法に基づく表記</h1>
-        
+
         <div className="space-y-10 bg-white p-8 lg:p-12 rounded-2xl border border-slate-200 shadow-sm">
           <section>
-            <h2 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">販売業者</h2>
-            <p className="text-slate-800">[氏名または会社名を入力してください]</p>
-          </section>
-
-          <section>
             <h2 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">運営責任者</h2>
-            <p className="text-slate-800">[責任者氏名を入力してください]</p>
+            <p className="text-slate-800">西原寛人</p>
           </section>
 
           <section>
             <h2 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">所在地</h2>
-            <p className="text-slate-800">[郵便番号・住所を入力してください]</p>
+            <p className="text-slate-800">〒103-0026 東京都中央区日本橋兜町 17-2 兜町第6葉山ビル 4F</p>
           </section>
 
           <section>
-            <h2 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">電話番号</h2>
-            <p className="text-slate-800">[電話番号を入力してください]</p>
-          </section>
-
-          <section>
-            <h2 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">メールアドレス</h2>
-            <p className="text-slate-800">[メールアドレスを入力してください]</p>
+            <h2 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">お問い合わせ</h2>
+            <p className="text-slate-800">
+              X（旧Twitter）:{' '}
+              <a
+                href="https://x.com/Prod103kanre"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:underline"
+              >
+                @Prod103kanre
+              </a>
+            </p>
+            <p className="text-sm text-slate-500 mt-2">
+              ご意見・ご要望はXのDMにてお気軽にお送りください。
+            </p>
           </section>
 
           <section>
@@ -80,7 +83,7 @@ export default function LegalPage() {
           <section>
             <h2 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">返品・キャンセルに関する特約</h2>
             <p className="text-slate-800">デジタルコンテンツという商品の性質上、決済完了後のキャンセル・返品・返金には応じられません。</p>
-            <p className="text-slate-800 mt-2 text-sm">※万が一、システム上の不具合によりダウンロードができなかった場合は、お問い合わせよりご連絡ください。</p>
+            <p className="text-slate-800 mt-2 text-sm">※万が一、システム上の不具合によりダウンロードができなかった場合は、XのDMよりご連絡ください。</p>
           </section>
         </div>
       </main>
