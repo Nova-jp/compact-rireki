@@ -1,38 +1,139 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# かんたん履歴書
 
-## Getting Started
+登録不要・個人情報の保存なし・明朗会計。  
+履歴書と職務経歴書をブラウザで作成してPDF出力できるWebサービス。
 
-First, run the development server:
+**URL**: https://compact-rireki.com
+
+---
+
+## ローカル開発
+
+### 1. 依存関係のインストール
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. 環境変数の設定
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+`.env.example` をコピーして `.env.local` を作成し、必要な値を設定する。
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+cp .env.example .env.local
+```
 
-## Learn More
+設定が必要な変数:
 
-To learn more about Next.js, take a look at the following resources:
+| 変数 | 説明 |
+|------|------|
+| `STRIPE_SECRET_KEY` | Stripe シークレットキー（ダッシュボードから取得） |
+| `BASE_URL` | ローカルは `http://localhost:3000` |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+`PDF_SERVER_URL` / `PDF_SERVER_API_KEY` はローカルではコードのデフォルト値（localhost:3001）が使われるため省略可。
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 3. 開発サーバー起動
 
-## Deploy on Vercel
+```bash
+# Next.js（port 3000）と PDF サーバー（port 3001）を同時起動（推奨）
+npm run dev:all
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# 個別に起動する場合
+npm run dev       # Next.js のみ
+npm run dev:pdf   # PDF サーバーのみ
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# compact-rireki
-# compact-rireki
+---
+
+## アーキテクチャ
+
+Web サーバー（Next.js）と PDF サーバー（Express + Puppeteer）を分離した2サービス構成。
+
+```
+ブラウザ
+  │
+  ├─ GET /resume, /cv          → Next.js（Cloud Run）
+  │    └─ 入力フォーム / プレビュー（CSR・localStorageのみ保存）
+  │
+  ├─ POST /api/checkout        → Stripe Checkout セッション作成
+  │
+  └─ POST /api/pdf             → 決済検証 → PDF サーバーへ転送
+       └─ POST /generate       → Express + Puppeteer（Cloud Run）
+```
+
+| サービス | Dockerfile | Cloud Run 設定 |
+|---------|------------|---------------|
+| Web | `Dockerfile.web` | min-instances: 1（常時起動） |
+| PDF | `Dockerfile.pdfserver` | min-instances: 0（オンデマンド） |
+
+---
+
+## 技術スタック
+
+| 用途 | 技術 |
+|------|------|
+| フロントエンド / API | Next.js 15（App Router） |
+| 状態管理 | Zustand |
+| PDF 生成 | Express + Puppeteer（Chromium） |
+| 決済 | Stripe Checkout |
+| インフラ | Google Cloud Run |
+| コンテナレジストリ | Google Artifact Registry |
+
+---
+
+## デプロイ
+
+### 前提条件
+
+- `gcloud` CLI がインストール済みで `kantan-rireki` プロジェクトへの権限がある
+- `PDF_SERVER_API_KEY` 環境変数がシェルに設定されている
+
+```bash
+export PDF_SERVER_API_KEY=your_secret_key_here
+```
+
+### 実行
+
+```bash
+bash deploy.sh
+```
+
+Web・PDF 両サービスのビルド・プッシュ・デプロイを自動実行する。
+
+### 本番環境の環境変数（Cloud Run コンソールで管理）
+
+以下の変数は `deploy.sh` では設定されないため、GCP コンソールで手動設定が必要:
+
+| 変数 | 設定先サービス |
+|------|-------------|
+| `STRIPE_SECRET_KEY` | Web |
+| `BASE_URL` | Web |
+| `STRIPE_WEBHOOK_SECRET` | Web（Webhook 利用時） |
+
+---
+
+## ディレクトリ構成
+
+```
+src/
+  app/
+    api/checkout/   Stripe Checkout セッション作成
+    api/pdf/        決済検証 → PDF サーバーへのプロキシ
+    api/webhook/    Stripe Webhook ハンドラ
+    cv/             職務経歴書ページ（page.tsx: SSR / CVClient.tsx: CSR）
+    resume/         履歴書ページ（page.tsx: SSR / ResumeClient.tsx: CSR）
+    legal/          特定商取引法ページ
+    contact/        お問い合わせページ
+  components/
+    forms/          入力フォーム群（resume/ と cv/ でサブディレクトリ分割）
+    preview/        プレビューコンポーネント（Web 表示・PDF 生成共用）
+    pdf/            PDF レイアウト（Puppeteer 向け HTML）
+  lib/
+    store/          Zustand ストア（resumeSlice / cvSlice）
+    constants.ts    APP_CONFIG（金額等）
+    stripe.ts       Stripe クライアント
+  pdf-server/
+    server.tsx      Express + Puppeteer サーバー
+  types/
+    resume.ts       全型定義（ResumeData・CVData）
+```
