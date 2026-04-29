@@ -10,8 +10,8 @@ export const metadata: Metadata = {
 
 const faqs = [
   {
-    q: "アカウント登録やメールアドレスの入力は必要ですか？",
-    a: "不要です。メールアドレスや氏名などの個人情報を入力せずに、すぐに作成を始められます。",
+    q: "アカウント登録は必要ですか？",
+    a: "不要です。すぐに作成を始められます。",
   },
   {
     q: "入力した個人情報はサーバーに保存されますか？",
@@ -99,11 +99,12 @@ export default function Home() {
             </div>
 
             <h1 className="text-3xl sm:text-4xl lg:text-7xl font-bold tracking-tight text-slate-900 mb-8 leading-[1.2] lg:leading-[1.1]">
-              登録不要・個人情報の保存なし。<br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">履歴書と職務経歴書を、ブラウザで完結。</span>
+              登録不要・個人情報の保存なし。<br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">履歴書と職務経歴書を、
+              <br/>かんたん作成。</span>
             </h1>
 
             <p className="text-base lg:text-xl text-slate-600 max-w-2xl mx-auto mb-10 lg:mb-12 leading-relaxed">
-              メールアドレス不要。入力データはサーバーに送信されません。<br className="hidden sm:block"/>
+              入力データはサーバーに保存されません。<br className="hidden sm:block"/>
               転職サービスへの誘導も一切なし。PDF出力¥{APP_CONFIG.PAYMENT.AMOUNT}のみ、サブスクなし。
             </p>
 
@@ -145,7 +146,7 @@ export default function Home() {
                 </div>
                 <h3 className="text-xl font-bold mb-3 text-slate-800">個人情報をとらない</h3>
                 <p className="text-slate-500 leading-relaxed text-sm lg:text-base">
-                  入力データはあなたのブラウザ内にのみ保存されます。サーバーへの送信・保存は一切行わないため、個人情報が外部に渡ることはありません。
+                  入力データはあなたのブラウザ内にのみ保存されます。サーバーへの保存は一切行わないため、個人情報が外部に渡ることはありません。
                 </p>
               </div>
 
@@ -200,7 +201,7 @@ export default function Home() {
                 <div>
                   <h3 className="font-bold text-slate-800 mb-2">個人情報の扱いが心配な方</h3>
                   <p className="text-slate-500 text-sm leading-relaxed">
-                    入力データはサーバーに送信されません。メールアドレスも収集しないので、勧誘メールが届くことはありません。
+                    入力データはサーバーに送信されません。勧誘メールが届くこともありません。
                   </p>
                 </div>
               </div>

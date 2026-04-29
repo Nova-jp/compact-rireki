@@ -34,7 +34,7 @@ gcloud builds submit . \
     --config=<(cat <<EOF
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', '$WEB_IMAGE', '-f', 'Dockerfile.web', '.']
+  args: ['build', '--build-arg', 'NEXT_PUBLIC_GA_ID=G-5VY06FEBL8', '-t', '$WEB_IMAGE', '-f', 'Dockerfile.web', '.']
 images:
 - '$WEB_IMAGE'
 EOF
@@ -66,7 +66,7 @@ gcloud run deploy "$WEB_SERVICE" \
     --region "$REGION" \
     --allow-unauthenticated \
     --min-instances 1 \
-    --update-env-vars "PDF_SERVER_URL=$PDF_URL,PDF_SERVER_API_KEY=$PDF_API_KEY" \
+    --update-env-vars "PDF_SERVER_URL=$PDF_URL,PDF_SERVER_API_KEY=$PDF_API_KEY,NEXT_PUBLIC_GA_ID=G-5VY06FEBL8" \
     --project "$PROJECT_ID"
 
 echo "--------------------------------------------------"
