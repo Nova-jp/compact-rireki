@@ -47,18 +47,21 @@ app.post('/generate', async (req, res) => {
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
 
-    const page = await browser.newPage();
-    await page.setViewport({ width: 794, height: 1123, deviceScaleFactor: 2 });
-    await page.setContent(`<!DOCTYPE html>${fullHtml}`, { waitUntil: 'networkidle0' });
-    await page.evaluate(() => document.fonts.ready);
+    let pdfBuffer: Uint8Array;
+    try {
+      const page = await browser.newPage();
+      await page.setViewport({ width: 794, height: 1123, deviceScaleFactor: 2 });
+      await page.setContent(`<!DOCTYPE html>${fullHtml}`, { waitUntil: 'networkidle0' });
+      await page.evaluate(() => document.fonts.ready);
 
-    const pdfBuffer = await page.pdf({
-      format: 'A4',
-      printBackground: true,
-      margin: { top: 0, bottom: 0, left: 0, right: 0 },
-    });
-
-    await browser.close();
+      pdfBuffer = await page.pdf({
+        format: 'A4',
+        printBackground: true,
+        margin: { top: 0, bottom: 0, left: 0, right: 0 },
+      });
+    } finally {
+      await browser.close();
+    }
 
     console.log(`[PDF-SERVER] PDF generated successfully`);
     res.contentType('application/pdf');

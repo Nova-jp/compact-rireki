@@ -19,10 +19,6 @@ export async function POST(req: Request) {
     // Remove trailing slash if exists
     origin = origin.replace(/\/$/, '');
 
-    console.log('--- Checkout Request (App Router) ---');
-    console.log('TYPE:', type);
-    console.log('FINAL ORIGIN:', origin);
-
     const isValidEmail = email && typeof email === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 const session = await stripe.checkout.sessions.create({
   // 住所入力の手間を省くため、自動税計算を明示的にオフにする
