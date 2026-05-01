@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { stripe } from '@/lib/stripe';
+import { getStripe } from '@/lib/stripe';
 import { APP_CONFIG } from '@/lib/constants';
 
 export async function POST(req: Request) {
@@ -20,7 +20,7 @@ export async function POST(req: Request) {
     origin = origin.replace(/\/$/, '');
 
     const isValidEmail = email && typeof email === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-const session = await stripe.checkout.sessions.create({
+const session = await getStripe().checkout.sessions.create({
   // 住所入力の手間を省くため、自動税計算を明示的にオフにする
   automatic_tax: { enabled: false },
   // エラー回避のため標準的な支払い方法指定に戻す
