@@ -86,11 +86,6 @@ Web サーバー（Next.js）と PDF サーバー（Express + Puppeteer）を分
 ### 前提条件
 
 - `gcloud` CLI がインストール済みで `kantan-rireki` プロジェクトへの権限がある
-- `PDF_SERVER_API_KEY` 環境変数がシェルに設定されている
-
-```bash
-export PDF_SERVER_API_KEY=your_secret_key_here
-```
 
 ### 実行
 
@@ -108,6 +103,7 @@ Web・PDF 両サービスのビルド・プッシュ・デプロイを自動実�
 |------|-------------|
 | `STRIPE_SECRET_KEY` | Web |
 | `BASE_URL` | Web |
+| `PDF_SERVER_API_KEY` | Web・PDF（両方に同じ値を設定） |
 | `STRIPE_WEBHOOK_SECRET` | Web（Webhook 利用時） |
 
 ---

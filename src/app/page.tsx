@@ -5,7 +5,7 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: "かんたん履歴書 | 登録不要・個人情報の保存なし・明朗会計",
-  description: "登録不要・個人情報の保存なし・転職サービスへの誘導なし。履歴書と職務経歴書をブラウザだけで作成してPDFダウンロード。月額不要、PDF出力のみ¥100の明朗会計。",
+  description: `登録不要・個人情報の保存なし・転職サービスへの誘導なし。履歴書と職務経歴書をブラウザだけで作成してPDFダウンロード。月額不要、PDF出力のみ¥${APP_CONFIG.PAYMENT.AMOUNT}の明朗会計。`,
 };
 
 const faqs = [

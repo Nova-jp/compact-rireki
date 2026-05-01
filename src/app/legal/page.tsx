@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { FileText, ArrowLeft } from 'lucide-react';
 import { Metadata } from 'next';
+import { APP_CONFIG } from '@/lib/constants';
 
 export const metadata: Metadata = {
   title: "特定商取引法に基づく表記",
@@ -58,7 +59,7 @@ export default function LegalPage() {
 
           <section>
             <h2 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">販売価格</h2>
-            <p className="text-slate-800 text-lg font-bold">PDF1件ダウンロードにつき100円〜（税込）</p>
+            <p className="text-slate-800 text-lg font-bold">PDF1件ダウンロードにつき{APP_CONFIG.PAYMENT.AMOUNT}円〜（税込）</p>
             <p className="text-sm text-slate-500 mt-1">※各作成画面の決済ボタンに表示される金額が適用されます。</p>
           </section>
 

@@ -6,8 +6,6 @@ REGION="asia-northeast1"
 REPO_NAME="kantan-rireki-repo"
 WEB_SERVICE="kantan-rireki-web"
 PDF_SERVICE="kantan-rireki-pdf"
-PDF_API_KEY="${PDF_SERVER_API_KEY:?ERROR: PDF_SERVER_API_KEY environment variable is not set}"
-
 # 画像のフルパスを定義
 PDF_IMAGE="asia-northeast1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/$PDF_SERVICE"
 WEB_IMAGE="asia-northeast1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/$WEB_SERVICE"
@@ -51,7 +49,6 @@ gcloud run deploy "$PDF_SERVICE" \
     --cpu 2 \
     --min-instances 0 \
     --port 3001 \
-    --set-env-vars "PDF_SERVER_API_KEY=$PDF_API_KEY" \
     --project "$PROJECT_ID"
 
 # 最新のPDFサーバーURLを取得
@@ -66,7 +63,7 @@ gcloud run deploy "$WEB_SERVICE" \
     --region "$REGION" \
     --allow-unauthenticated \
     --min-instances 1 \
-    --update-env-vars "PDF_SERVER_URL=$PDF_URL,PDF_SERVER_API_KEY=$PDF_API_KEY,NEXT_PUBLIC_GA_ID=G-5VY06FEBL8" \
+    --update-env-vars "PDF_SERVER_URL=$PDF_URL,NEXT_PUBLIC_GA_ID=G-5VY06FEBL8" \
     --project "$PROJECT_ID"
 
 echo "--------------------------------------------------"
