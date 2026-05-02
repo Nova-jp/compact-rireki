@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 # GCP CI/CD初期設定スクリプト（一回のみ実行）
 
 PROJECT_ID="kantan-rireki"
