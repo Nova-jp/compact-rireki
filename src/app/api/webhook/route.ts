@@ -23,7 +23,6 @@ export async function POST(req: Request) {
   switch (event.type) {
     case 'checkout.session.completed':
       const session = event.data.object;
-      console.log(`Payment successful for session: ${session.id}`);
       // Here you could save to a database if you had one
       break;
     default:

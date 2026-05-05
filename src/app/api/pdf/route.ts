@@ -12,16 +12,15 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: 'Payment required' }, { status: 402 });
       }
       const session = await getStripe().checkout.sessions.retrieve(sessionId);
-      if (session.payment_status !== 'paid') {
-        return NextResponse.json({ error: 'Payment not verified' }, { status: 402 });
+      const ageSeconds = Date.now() / 1000 - session.created;
+      if (session.payment_status !== 'paid' || ageSeconds > 600) {
+        return NextResponse.json({ error: 'Payment not valid' }, { status: 402 });
       }
     }
 
     // 2. Call the dedicated PDF Server
     // In production, this would be an internal or external URL of the PDF Cloud Run service
     const PDF_SERVER_URL = process.env.PDF_SERVER_URL || 'http://localhost:3001/generate';
-    
-    console.log(`[WEB-GATEWAY] Forwarding request to PDF Server: ${PDF_SERVER_URL}`);
 
     const pdfResponse = await fetch(PDF_SERVER_URL, {
       method: 'POST',

@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://compact-rireki.com';
-  const lastModified = new Date();
+  const lastModified = new Date('2026-05-05');
 
   return [
     {
@@ -25,6 +25,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${baseUrl}/legal`,
+      lastModified,
+      changeFrequency: 'yearly',
+      priority: 0.3,
+    },
+    {
+      url: `${baseUrl}/contact`,
       lastModified,
       changeFrequency: 'yearly',
       priority: 0.3,

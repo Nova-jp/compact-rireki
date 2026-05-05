@@ -1,4 +1,4 @@
-FROM node:20-slim AS base
+FROM node:20.18.1-slim AS base
 WORKDIR /app
 
 # Install all dependencies (including devDependencies) for building
@@ -19,7 +19,7 @@ ENV NEXT_PUBLIC_GA_ID=$NEXT_PUBLIC_GA_ID
 RUN npm run build
 
 # Production image, copy all the files and run next
-FROM node:20-slim AS runner
+FROM node:20.18.1-slim AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
