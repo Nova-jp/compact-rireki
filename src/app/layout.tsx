@@ -20,13 +20,13 @@ const siteDescription = `登録不要・個人情報の保存なし・転職サ�
 
 export const metadata: Metadata = {
   title: {
-    default: "かんたん履歴書 | 登録不要・個人情報の保存なし・明朗会計",
+    default: "かんたん履歴書 | 登録不要・個人情報の保存なし",
     template: "%s | かんたん履歴書"
   },
   description: siteDescription,
   keywords: ["履歴書作成", "職務経歴書作成", "登録不要", "個人情報不要", "転職", "メールアドレス不要", "サブスクなし", "月額なし"],
   openGraph: {
-    title: "かんたん履歴書 | 登録不要・個人情報の保存なし・明朗会計",
+    title: "かんたん履歴書 | 登録不要・個人情報の保存なし",
     description: siteDescription,
     url: "https://compact-rireki.com",
     siteName: "かんたん履歴書",
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "かんたん履歴書 | 登録不要・個人情報の保存なし・明朗会計",
+    title: "かんたん履歴書 | 登録不要・個人情報の保存なし",
     description: siteDescription,
   },
 };
