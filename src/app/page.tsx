@@ -4,8 +4,8 @@ import { APP_CONFIG } from '@/lib/constants';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "かんたん履歴書 | 登録不要・個人情報の保存なし・明朗会計",
-  description: `登録不要・個人情報の保存なし・転職サービスへの誘導なし。履歴書と職務経歴書をブラウザだけで作成してPDFダウンロード。月額不要、PDF出力のみ¥${APP_CONFIG.PAYMENT.AMOUNT}の明朗会計。`,
+  title: "かんたん履歴書 | 登録不要・個人情報の保存なし",
+  description: `登録不要・個人情報の保存なし・転職サービスへの誘導なし。履歴書と職務経歴書をブラウザだけで作成してPDFダウンロード。月額不要、PDF出力のみ¥${APP_CONFIG.PAYMENT.AMOUNT}。`,
 };
 
 const faqs = [
@@ -164,7 +164,7 @@ export default function Home() {
                 <div className="w-16 h-16 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-sm">
                   <CheckCircle2 className="w-8 h-8" />
                 </div>
-                <h3 className="text-xl font-bold mb-3 text-slate-800">明朗会計・サブスクなし</h3>
+                <h3 className="text-xl font-bold mb-3 text-slate-800">サブスク・転職サービスへの誘導なし</h3>
                 <p className="text-slate-500 leading-relaxed text-sm lg:text-base">
                   月額料金・サブスクリプションは存在しません。PDF出力時のみ¥{APP_CONFIG.PAYMENT.AMOUNT}の都度払い。転職サービスへの誘導も一切ありません。
                 </p>

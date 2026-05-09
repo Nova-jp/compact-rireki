@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const siteDescription = `登録不要・個人情報の保存なし・転職サービスへの誘導なし。履歴書と職務経歴書をブラウザだけで作成してPDFダウンロード。月額不要、PDF出力のみ¥${APP_CONFIG.PAYMENT.AMOUNT}の明朗会計。`;
+const siteDescription = `登録不要・個人情報の保存なし・転職サービスへの誘導なし。履歴書と職務経歴書をブラウザだけで作成してPDFダウンロード。月額不要、PDF出力のみ¥${APP_CONFIG.PAYMENT.AMOUNT}。`;
 
 export const metadata: Metadata = {
   title: {
