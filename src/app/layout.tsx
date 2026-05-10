@@ -52,8 +52,8 @@ export default function RootLayout({
       >
         {children}
         <Toaster position="top-center" toastOptions={{ duration: 4000 }} />
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID || ""} />
       </body>
-      <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID || ""} />
     </html>
   );
 }
